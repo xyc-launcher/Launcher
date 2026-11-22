@@ -1,25 +1,31 @@
 # xyc Launcher
 
-一个极简、绿色便携的 Minecraft Java 版启动器。**Windows 和 Linux 都能用**，核心是跨平台的 Java/Swing 程序，按游戏版本要求自动配好运行时。
-
-仅支持 Minecraft: Java Edition。
+一个极简的便携式跨平台 Minecraft Java 版启动器。基于 Java/Swing 框架。可以按游戏版本要求自动配置运行时。
 
 ## 下载与运行
 
+可以前往 [Github发布页](https://github.com/xyc-launcher/Launcher/releases) 下载本程序。
+
+下载后请核验文件哈希和是否相同。
+
 ### Windows
 
-| 版本 | 体积 | 文件 |
-| --- | --- | --- |
-| 64 位（推荐） | 184 KB | `xyc.Launcher1.0.1.exe` |
-| 32 位 | 184 KB | `xyc.Launcher.32bit1.0.1.exe` |
+前提：
 
-- 系统：Windows + .NET Framework 4.x（Win10 / Win11 自带，不用另装）
-- Java：不用手动装。依次在 `JAVA_HOME`、注册表、`.minecraft\runtime`、`PATH` 里找，找不到就自动下载对应版本并解压
-- 配置：双击即开，设置写在 exe 同目录的 `config.json`
+- .NET Framework 4.x
+- Java 17 或更高版本
+
+发布页文件说明
+
+- `xyc.Launcher1.0.1.exe` 64位启动器
+- `xyc.Launcher.32bit1.0.1.exe` 32位启动器
+
+请按照你的电脑配置选择
+
 
 ### Linux
 
-绿色便携，把整个文件夹放到任意位置即可运行，配置写在同目录的 `config.json`，不写系统目录、不改 PATH。Linux 版是仓库里的 `linux/` 文件夹，自带脚本、jar、源码和图标，可以整个拷走独立使用。
+在发布页下载 `xyc.Launcher.Linux.v1.0.3.zip` 文件并解压，然后进入目录赋予权限后运行 `run.sh`
 
 ```bash
 # 1. 解压/下载后进入 linux 目录
@@ -46,15 +52,6 @@ chmod +x run.sh
 > **游戏本体所需的 Java 由启动器按游戏版本自动单独准备**（老版本精确匹配 Java 8，新版用 17/21），与跑界面的 Java 互不干扰。即使你用 Java 21 跑启动器，也照样能启动需要 Java 8 的老版本游戏。想手动指定跑界面的 Java，设 `JAVA_HOME` 或 `XYC_JAVA` 即可。
 
 ## 校验与签名（Windows）
-
-两个 exe 都是 187,984 字节（即表中的 184 KB）。下载后可核对哈希：
-
-| 文件 | SHA-256 |
-| --- | --- |
-| `xyc.Launcher1.0.1.exe` | `e7477d2eaa6458cd6c2268aad4319e3cb2eb70e99e659a3a65f56944bcc8fa6a` |
-| `xyc.Launcher.32bit1.0.1.exe` | `ff6df2bcb121b1db18f676231295045db9dfce6ef3023fe7b05e1bb61c1a70e4` |
-
-对得上就是原版，对不上别运行。
 
 exe 带 Authenticode 数字签名（SHA-256 / RSA，含 DigiCert 时间戳），证书 Subject 是 `_xycwww_`，有效期到 2036 年；文件属性里是 `xyc Launcher 1.0.1.0`、© `_xycwww_`。
 

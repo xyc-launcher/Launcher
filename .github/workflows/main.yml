@@ -1,0 +1,72 @@
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+env: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: 安装Java 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: 安装.NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: 构建主程序
+        run: mvn package
+
+      - name: 构建windows版启动器
+        run: |
+          cp target/xyc-Launcher-1.0-SNAPSHOT.jar platform/windows/Resources/launcher.jar
+          cp assets/appicon.ico platform/windows/Resources/appicon.ico
+          cd platform/windows
+          dotnet publish -c Release -r win-x64 --self-contained false
+          dotnet publish -c Release -r win-x86 --self-contained false
+
+      - name: 打包linux版
+        run: |
+          cp target/xyc-Launcher-1.0-SNAPSHOT.jar platform/linux/launcher.jar
+          mkdir platform/linux/assets
+          cp assets/icon.png platform/linux/assets/icon.png
+
+      - name: 上传构建产物：xycLauncher
+        uses: actions/upload-artifact@v7
+        with:
+          name: xycLauncher
+          path: ./target/xyc-Launcher-1.0-SNAPSHOT.jar
+          retention-days: 7
+
+      - name: 上传构建产物：xycLauncher-windows-x64
+        uses: actions/upload-artifact@v7
+        with:
+          name: xycLauncher-windows-x64
+          path: ./platform/windows/bin/Release/net48/win-x64/publish/
+          retention-days: 7
+
+      - name: 上传构建产物：xycLauncher-windows-x86
+        uses: actions/upload-artifact@v7
+        with:
+          name: xycLauncher-windows-x86
+          path: ./platform/windows/bin/Release/net48/win-x86/publish/
+          retention-days: 7
+
+      - name: 上传构建产物：xycLauncher-linux
+        uses: actions/upload-artifact@v7
+        with:
+          name: xycLauncher-linux
+          path: ./platform/linux/
+          retention-days: 7

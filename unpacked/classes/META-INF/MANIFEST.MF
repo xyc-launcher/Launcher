@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Created-By: 17.0.14 (Microsoft)
-Main-Class: com.mclauncher.main.Main
-
