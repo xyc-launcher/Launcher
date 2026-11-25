@@ -10,8 +10,8 @@
 
 | 版本 | 体积 | 文件 |
 | --- | --- | --- |
-| 64 位（推荐） | 198 KB | `xyc.Launcher.v1.0.5.exe` |
-| 32 位 | 198 KB | `xyc.Launcher.32bit.v1.0.5.exe` |
+| 64 位（推荐） | 4 MB | `xyc.Launcher.v1.0.6.exe` |
+| 32 位 | 4 MB | `xyc.Launcher.32bit.v1.0.6.exe` |
 
 - 系统：Windows + .NET Framework 4.x（Win10 / Win11 自带，不用另装）
 - Java：不用手动装。依次在 `JAVA_HOME`、注册表、`.minecraft\runtime`、`PATH` 里找，找不到就自动下载对应版本并解压
@@ -47,22 +47,17 @@ chmod +x run.sh
 
 ## 校验与签名（Windows）
 
-原始两个 exe 都是 202,320 字节（即表中的 198 KB），`-javafix` 修复包为 195,072 字节。下载后可核对哈希：
+原始两个 exe 都是 4MB，`32BIT包为 3MB。下载后可核对哈希：
 
 | 文件 | SHA-256 |
 | --- | --- |
-| `xyc.Launcher.v1.0.5.exe` | `323774195b1437c00dfc437cf3d13f1af728b8b6e0b8c0928528c39e1dfaca74` |
-| `xyc.Launcher.32bit.v1.0.5.exe` | `dce75480d0e467ebe9fcd714535e1f960a57ff178e3b074c5d8f01508fe7f78a` |
-| `xyc.Launcher.v1.0.5-javafix.exe` | `0b5ccff5bfdc1e0243157d240a1be78b19af2fdb0b72aa5e2934832846ffb9fa` |
-| `xyc.Launcher.32bit.v1.0.5-javafix.exe` | `eb5cb130b42a3e63b7e359060d97f35f3520194a8292f9bf8db93ee53378fc3a` |
+| `xyc.Launcher.v1.0.6.exe` | `sha256:d6c8817b791b65c9a1cc66f320e7ba9999ff06a61a2a2842609472179dc95d11` |
+| `xyc.Launcher.32bit.v1.0.5.exe` | `sha256:10dc5728733585b4eef491d77ef322b97221f12d3ed95fd6c1f315febead3db9` |
 
 对得上就是原版，对不上别运行。
 
-`-javafix` 只替换了 exe 内嵌的 launcher.jar：修复了老版本游戏误选 Java 25 的崩溃，Java 选择界面也改成了「按游戏要求版本（推荐）」。签名私钥不在仓库，重新打包后签名已移除；等朋友用原证书重签即可恢复签名状态。
+文件属性里是 `xyc Launcher 1.0.5.0`、© `_xycwww_`。
 
-exe 带 Authenticode 数字签名（SHA-256 / RSA，含 DigiCert 时间戳），证书 Subject 是 `_xycwww_`，有效期到 2036 年；文件属性里是 `xyc Launcher 1.0.5.0`、© `_xycwww_`。
-
-这张证书是自签名的，没有 CA 签发，所以 Windows 第一次运行会弹「未知发布者」。这不是文件有问题，只是没有第三方为身份背书；要消掉这个提示只能买代码签名证书（OV/EV，一年几百到几千）。
 
 ### 发布包拆解
 
