@@ -1,0 +1,101 @@
+name: Build Windows & Linux by Tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            script: build.bat
+            artifact: windows-build
+          - os: ubuntu-latest
+            script: linux/build.sh
+            artifact: linux-build
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: cmd /c build.bat
+
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          chmod +x linux/build.sh
+          ./linux/build.sh
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            *.exe
+            *.jar
+            linux/*.jar
+            linux/*.sh
+          if-no-files-found: warn
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts (keep subdirectories)
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+
+      - name: List downloaded files
+        run: find release-assets -type f
+
+      - name: Normalize asset names (avoid duplicate basenames)
+        run: |
+          set -e
+          mkdir -p final
+          for dir in windows-build linux-build; do
+            [ -d "release-assets/$dir" ] || continue
+            suffix="${dir%-build}"     # windows / linux
+            for f in release-assets/$dir/*; do
+              [ -f "$f" ] || continue
+              base=$(basename "$f")
+              ext="${base##*.}"
+              name="${base%.*}"
+              cp "$f" "final/${name}-${suffix}.${ext}"
+            done
+          done
+          echo "==== final ===="
+          ls -la final
+
+      - name: Delete stale release if exists
+        run: gh release delete "${{ github.ref_name }}" --yes || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          files: final/*
+          generate_release_notes: true
+          draft: false
