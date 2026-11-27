@@ -10,8 +10,8 @@
 
 | 版本 | 体积 | 文件 |
 | --- | --- | --- |
-| 64 位（推荐） | 4 MB | `xyc.Launcher.v1.0.6.exe` |
-| 32 位 | 4 MB | `xyc.Launcher.32bit.v1.0.6.exe` |
+| 64 位（推荐） | 9 MB | `xyc.Launcher.v1.0.6.exe` |
+| 32 位 | 9 MB | `xyc.Launcher.32bit.v1.0.6.exe` |
 
 - 系统：Windows + .NET Framework 4.x（Win10 / Win11 自带，不用另装）
 - Java：不用手动装。依次在 `JAVA_HOME`、注册表、`.minecraft\runtime`、`PATH` 里找，找不到就自动下载对应版本并解压
@@ -51,8 +51,8 @@ chmod +x run.sh
 
 | 文件 | SHA-256 |
 | --- | --- |
-| `xyc.Launcher.v1.0.6.exe` | `sha256:d6c8817b791b65c9a1cc66f320e7ba9999ff06a61a2a2842609472179dc95d11` |
-| `xyc.Launcher.32bit.v1.0.5.exe` | `sha256:10dc5728733585b4eef491d77ef322b97221f12d3ed95fd6c1f315febead3db9` |
+| `xyc.Launcher.v1.0.6.exe` | `sha256:我懒得看自己去仓库看` |
+| `xyc.Launcher.32bit.v1.0.5.exe` | `sha256:我懒得看自己去仓库看` |
 
 对得上就是原版，对不上别运行。
 
