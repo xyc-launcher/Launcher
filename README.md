@@ -51,8 +51,8 @@ chmod +x run.sh
 
 | 文件 | SHA-256 |
 | --- | --- |
-| `xyc.Launcher.v1.0.6.exe` | `sha256:我懒得看自己去仓库看` |
-| `xyc.Launcher.32bit.v1.0.5.exe` | `sha256:我懒得看自己去仓库看` |
+| `xyc.Launcher.v1.0.6.exe` | `sha256:我懒得写自己去仓库看` |
+| `xyc.Launcher.32bit.v1.0.6.exe` | `sha256:我懒得写自己去仓库看` |
 
 对得上就是原版，对不上别运行。
 
@@ -231,7 +231,6 @@ java -cp out:launcher.jar HeadlessTest
 
 ## 常见问题
 
-- **Windows 首次运行弹「未知发布者」**：exe 是自签名证书，没有 CA 背书，属正常现象，见「校验与签名」。
 - **Linux 双击 run.sh 没反应**：文件管理器需先允许「作为程序执行」，或直接在终端 `./run.sh`。
 - **提示下载 Java 失败**：系统里没检测到 Java 且网络不通。手动装 Java 17+ 后设 `JAVA_HOME`，或把任意 JDK 解压到 `.minecraft/runtime/` 下即可，脚本会优先用本地的。
 - **Linux Wayland 下没走原生、提示走 XWayland**：因为本地 Java 不是 JBR。这是默认行为（不下载）；想要原生就设 `XYC_FORCE_NATIVE_WAYLAND=1` 自动下载 JBR，或 `JBR_HOME` 指定已有 JBR。
